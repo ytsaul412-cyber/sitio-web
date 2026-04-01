@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Digital Cuentas - Saúl RGB</title>
+    <style>
+        /* --- ANIMACIONES RGB MANTENIDAS --- */
+        @keyframes rgb-text {
+            0% { color: #ffffff; text-shadow: 0 0 10px #ffffff; }
+            33% { color: #2244b4; text-shadow: 0 0 10px #a81678; }
+            66% { color: #c55514; text-shadow: 0 0 10px #0b0ba1; }
+            100% { color: #a10c89; text-shadow: 0 0 10px #ff0000; }
+        }
+
+        @keyframes rgb-border {
+            0% { border-color: rgb(180, 22, 127); box-shadow: 0 0 20px #ff0000; }
+            50% { border-color: #d6692a; box-shadow: 0 0 20px #00ff00; }
+            100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+        body {
+            /* --- OPACIDAD SUBIDA (Capa oscura reducida de 0.7 a 0.3) --- */
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container { padding: 40px 20px; text-align: center; }
+
+        .title-rgb {
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            animation: rgb-text 3s infinite linear;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.85); 
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid;
+            animation: rgb-border 4s infinite linear;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover { transform: scale(1.05); }
+        .card h3 { font-size: 1.4rem; margin-bottom: 15px; }
+        .precio { font-size: 2.2rem; font-weight: 900; animation: rgb-text 3s infinite linear; margin-bottom: 20px; }
+
+        .input-fortnite {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background: #111;
+            color: white;
+            text-align: center;
+        }
+
+        .agotado { opacity: 0.6; filter: grayscale(1); pointer-events: none; }
+
+        .stamp-agotado {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 10px 20px;
+            font-weight: 900;
+            font-size: 1.5rem;
+            border: 3px solid white;
+            z-index: 10;
+        }
+
+        .btn-principal {
+            background: #fff;
+            color: #000;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- MODAL PAGO --- */
+        #modal-pago {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 5000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #000;
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid;
+            animation: rgb-border 2s infinite linear;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .btn-metodo {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .paypal { background: #003087; }
+        .whatsapp-pay { background: #25d366; }
+
+        .btn-soporte {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #000;
+            color: white;
+            border: 3px solid;
+            padding: 15px 30px;
+            border-radius: 50px;
+            animation: rgb-border 2s infinite linear;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 3000;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.9);
+            padding: 50px;
+            text-align: center;
+            margin-top: 60px;
+            border-top: 1px solid #333;
+        }
+
+        .rgb-link { text-decoration: none; font-weight: bold; margin: 0 20px; animation: rgb-text 3s infinite linear; }
+        .made-by { margin-top: 25px; font-size: 1.5rem; font-weight: 900; animation: rgb-text 2s infinite linear; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="title-rgb">TIENDA DIGITAL CUENTAS</h1>
+
+        <div class="grid-productos">
+            <div class="card">
+                <h3>Club Fortnite</h3>
+                <p class="precio">400 MXN</p>
+                <input type="text" id="id-fortnite" placeholder="Tu ID de Fortnite" class="input-fortnite">
+                <button class="btn-principal" onclick="abrirPago('Club Fortnite', '400', 'MXN')">COMPRAR</button>
+            </div>
+
+            <div class="card">
+                <h3>Alight Motion Pro</h3>
+                <p class="precio">1000 MXN</p>
+                <button class="btn-principal" onclick="abrirPago('Alight Motion Pro', '1000', 'MXN')">COMPRAR</button>
+            </div>
+
+            <div class="card">
+                <h3>Netflix 4K</h3>
+                <p class="precio">1€</p>
+                <button class="btn-principal" onclick="abrirPago('Netflix 4K', '1', 'EUR')">COMPRAR</button>
+            </div>
+
+            <div class="card">
+                <h3>Disney+</h3>
+                <p class="precio">1€</p>
+                <button class="btn-principal" onclick="abrirPago('Disney+', '1', 'EUR')">COMPRAR</button>
+            </div>
+
+            <div class="card">
+                <h3>HBO Max</h3>
+                <p class="precio">1€</p>
+                <button class="btn-principal" onclick="abrirPago('HBO Max', '1', 'EUR')">COMPRAR</button>
+            </div>
+
+            <div class="card">
+                <h3>Spotify Premium</h3>
+                <p class="precio">2€</p>
+                <button class="btn-principal" onclick="abrirPago('Spotify Premium', '2', 'EUR')">COMPRAR</button>
+            </div>
+
+            <div class="card">
+                <h3>YouTube Premium</h3>
+                <p class="precio">1€</p>
+                <button class="btn-principal" onclick="abrirPago('YouTube Premium', '1', 'EUR')">COMPRAR</button>
+            </div>
+
+            <div class="card agotado">
+                <div class="stamp-agotado">AGOTADO</div>
+                <h3>Filmora</h3>
+                <p class="precio">1€</p>
+                <button class="btn-principal" disabled>COMPRAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-pago">
+        <div class="modal-content">
+            <h2 id="modal-titulo" style="margin-bottom:20px; animation: rgb-text 3s infinite linear;">PAGO SEGURO</h2>
+            <a id="link-paypal" href="#" target="_blank" class="btn-metodo paypal">Pagar con PayPal</a>
+            <a id="link-whatsapp-pay" href="#" target="_blank" class="btn-metodo whatsapp-pay">Pagar por WhatsApp</a>
+            <p onclick="cerrarPago()" style="margin-top:20px; cursor:pointer; color:red; font-weight:bold;">[ CERRAR ]</p>
+        </div>
+    </div>
+
+    <a href="https://wa.me/5218184598143" class="btn-soporte">SOPORTE 24/7</a>
+
+    <footer>
+        <div class="links-footer">
+            <a href="#" class="rgb-link">MI DISCORD</a>
+            <a href="#" class="rgb-link">DISCORD AMIGO</a>
+        </div>
+        <p class="made-by">Made by Saul</p>
+    </footer>
+
+    <script>
+        const modal = document.getElementById('modal-pago');
+        const correoPaypal = "jordipekesuprem@gmail.com";
+        const miNumero = "5218184598143";
+
+        function abrirPago(producto, precio, moneda) {
+            let idFortnite = "";
+            if(producto === 'Club Fortnite') {
+                idFortnite = document.getElementById('id-fortnite').value;
+            }
+            document.getElementById('modal-titulo').innerText = producto;
+            document.getElementById('link-paypal').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${correoPaypal}&item_name=${encodeURIComponent(producto + (idFortnite ? " ID: "+idFortnite : ""))}&amount=${precio}&currency_code=${moneda}`;
+            document.getElementById('link-whatsapp-pay').href = `https://wa.me/${miNumero}?text=Hola Saúl, quiero comprar ${producto} por ${precio}${moneda}${idFortnite ? ". Mi ID: "+idFortnite : ""}`;
+            modal.style.display = 'flex';
+        }
+
+        function cerrarPago() { modal.style.display = 'none'; }
+    </script>
+</body>
+</html>
